@@ -1,0 +1,24 @@
+{% extends 'pdflist/base.html' %}
+{% load  staticfiles %}
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="albums-container container-fluid">
+    <div class="col-sm-12 pb-3">
+        <h3 style="color:purple;">{{ user.username }}'s Albums</h3>
+    </div>
+
+    <div class="row">
+        {% for item in items %}
+        <div class="col-sm-6 col-lg-4 pb-5" style="width: 25rem;">
+            <img src="{%  static 'defaultbook.jpeg' %}" class="title_img" style="height:200px; width:200px;">
+            <div class="card-body">
+                <h5 class="card-title" style="color:#6E92F9;">{{ item.title }}</h5>
+                <a href="{{ item.file.url }}" class="btn btn-outline-success">Read ({{ item.title }})</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
