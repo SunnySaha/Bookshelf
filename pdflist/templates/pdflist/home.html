@@ -1,24 +1,62 @@
 {% extends 'pdflist/base.html' %}
-{% load  staticfiles %}
+{% load static %}
 {% block title %} Home {% endblock %}
 
 {% block content %}
 <div class="albums-container container-fluid">
-    <div class="col-sm-12 pb-3">
-        <h3 style="color:purple;">{{ user.username }}'s Albums</h3>
+    <div class="col-sm-12 pb-2">
+        <h3 style="color:purple;">Welcome To BookShelf</h3>
     </div>
 
     <div class="row">
         {% for item in items %}
+        {% if item.make_public == True %}
         <div class="col-sm-6 col-lg-4 pb-5" style="width: 25rem;">
             <img src="{%  static 'defaultbook.jpeg' %}" class="title_img" style="height:200px; width:200px;">
             <div class="card-body">
-                <h5 class="card-title" style="color:#6E92F9;">{{ item.title }}</h5>
-                <a href="{{ item.file.url }}" class="btn btn-outline-success">Read ({{ item.title }})</a>
+                <h5 class="card-title" style="color:#6E92F9;">{{ item.title }} By ({{ item.author }})</h5>
+                <h6 class="card-title" style="color:#6E92F9;">Posted ({{ item.user }} at <small class="text-muted">{{ item.date_upload|date:"F d, Y" }}</small>)</h6>
+                <a href="{{ item.pdf_file.url }}" target="_blank" class="btn btn-outline-success">Read Book</a>
+                 <a href="{% url 'post_update' item.id %}"><span class=" btn btn-outline-primary fa fa-pencil-square-o" aria-hidden="true" style="height: 38px"></span></a>
+                <a href="{% url 'post_delete' item.id %}"><span class=" btn btn-outline-danger fa fa-trash" aria-hidden="true" style="height: 38px"></span></a>
+
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
+
+<div class="mb-5">
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+
+            <a class="btn btn-outline-info md-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info md-4" href="?page={{ page_obj.previous_page_number}}">Prev</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+
+            {% if page_obj.number == num %}
+
+                 <a class="btn btn-info md-4" href="?page={{ num }}"> {{ num }}</a>
+
+            {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+
+                <a class="btn btn-outline-info md-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+
+            <a class="btn btn-outline-info md-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a class="btn btn-outline-info md-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+
+    {% endif %}
+
+
+
+    </div>
 
 {% endblock %}

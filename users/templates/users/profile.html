@@ -4,10 +4,9 @@
 
 {% block content %}
 
-<h2> WelCome {{ user.username }}</h2>
   <div class="content-section">
     <div class="media">
-      <img class="rounded-circle account-img"  width="10%" height="5%"  src="{{ user.profile.image.url }}"/>
+      <img class="rounded-circle account-img"  width="15%" height="10%"  src="{{ user.profile.image.url }}"/>
         <div class="media-body">
 
         <h2 class="account-heading" style="color:blue">{{ user.username }}</h2>
@@ -23,7 +22,7 @@
             {{ p_form|crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-success" type="submit"> Update</button>
+            <button class="btn btn-outline-success mb-5" type="submit"> Update</button>
         </div>
 
     </form>

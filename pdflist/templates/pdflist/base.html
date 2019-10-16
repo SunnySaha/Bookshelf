@@ -1,6 +1,7 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,30 +10,35 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <title>{% block title %}{% endblock %}</title>
-    {% load staticfiles %}
+    <title>{% block title %}BookShelf{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{%  static 'titlepic.png' %}"/>
+
 
 </head>
 <body>
 <header class="site-header mb-5">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'about' %}">Adda</a>
+            <a class="navbar-brand mr-4" href="{% url 'about' %}">BookShelf</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav mr-auto">
+                        {% if user.is_authenticated %}
                         <a class="nav-item nav-link" href="{% url 'homepage' %}">Home</a>
+                         <a class="nav-item nav-link" href="{% url 'user_book' request.user.username %}">My Books</a>
+                        {% endif %}
                     </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
-                    {% if user.is_authenticated %}
 
-                     <a class="nav-item nav-link" href="#">Add Post</a>
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'contact' %}">Contacts</a>
+                     <a class="nav-item nav-link" href="{% url 'book-upload' %}">Upload Books</a>
                      <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
 
@@ -45,15 +51,16 @@
         </div>
     </nav>
 </header>
-<nav class="navbar navbar-light fixed-bottom" style="background-color: #e3f2fd; height:40px;">
+<div class="mt-5">
+<nav class="navbar navbar-light fixed-bottom" style="background-color: #A4B5BE; height:40px;">
 
   <!-- Copyright -->
   <div class="footer-copyright text-center">©Copyright 2019
-    <a href="https://scsahasunny.wixsite.com/aboutsunny" target="_blank"><b>Sunny Saha</b></a>
+    <a href="http://www.scsahasunny.wix.com/aboutsunny"  target="_blank"><b>Sunny Saha</b></a>
   </div>
 
 </nav>
-
+</div>
 
 <main role="main" class="container">
     <div class="row">
@@ -87,4 +94,3 @@
 
 </body>
 </html>
-
